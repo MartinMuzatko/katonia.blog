@@ -1,0 +1,43 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn", "oxc", "react", "jsx-a11y", "nextjs", "import"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn",
+		"perf": "warn"
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"es2024": true
+	},
+	"ignorePatterns": [".next/**", "out/**", "_pagefind/**", "next-env.d.ts"],
+	"rules": {
+		"typescript/consistent-type-imports": "error",
+		"typescript/no-explicit-any": "error",
+		"react/jsx-pascal-case": "error",
+		"react/react-in-jsx-scope": "off",
+		"react/self-closing-comp": "warn",
+		"react/jsx-no-useless-fragment": "warn",
+		"react/no-array-index-key": "warn",
+		"import/no-cycle": "error",
+		"import/no-duplicates": "error",
+		"import/first": "error",
+		"import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
+		"eslint/no-console": ["warn", { "allow": ["warn", "error"] }],
+		"eslint/eqeqeq": "error",
+		"eslint/prefer-const": "error",
+		"eslint/no-var": "error",
+		"unicorn/filename-case": ["error", { "case": "kebabCase" }],
+		"nextjs/no-img-element": "off"
+	},
+	"overrides": [
+		{
+			"files": ["components/**/*.tsx"],
+			"rules": {
+				"unicorn/filename-case": ["error", { "case": "pascalCase" }],
+				"react/only-export-components": "error"
+			}
+		}
+	]
+}
