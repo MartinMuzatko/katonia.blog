@@ -164,6 +164,12 @@ a:hover {
 	margin-left: auto;
 }
 
+.lang-switch a {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
 .theme-toggle {
 	display: inline-grid;
 	place-items: center;

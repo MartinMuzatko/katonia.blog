@@ -1,7 +1,10 @@
-import { normalizePages } from 'nextra/normalize-pages'
-import { getPageMap } from 'nextra/page-map'
+import { cache } from 'react'
+
+import { getEntries, importEntry, toTags } from './content'
+import { type Locale, localize } from './i18n'
 
 export type Post = {
+	/** Localized route, e.g. `/de/posts/hello-world`. */
 	route: string
 	title: string
 	date: string
@@ -9,29 +12,34 @@ export type Post = {
 	tags: string[]
 }
 
-const toTags = (value: unknown): string[] =>
-	(Array.isArray(value) ? value : typeof value === 'string' ? value.split(',') : [])
-		.map(tag => String(tag).trim().toLowerCase())
-		.filter(Boolean)
-
-/** All published posts under /posts, newest first. Set `draft: true` in front matter to hide one. */
-export async function getPosts(): Promise<Post[]> {
-	const { directories } = normalizePages({
-		list: await getPageMap('/posts'),
-		route: '/posts'
-	})
-	return directories
-		.filter(item => item.name !== 'index' && item.frontMatter?.date && !item.frontMatter.draft)
-		.map(item => ({
-			route: item.route,
-			title: String(item.frontMatter?.title ?? item.title),
-			date: String(item.frontMatter?.date),
-			description: item.frontMatter?.description,
-			tags: toTags(item.frontMatter?.tags)
-		}))
-		.toSorted((a, b) => +new Date(b.date) - +new Date(a.date))
+const toPost = async (slug: string, lang: Locale): Promise<Post | undefined> => {
+	const { metadata } = await importEntry('posts', slug, lang)
+	const { title, date, description, tags } = metadata as typeof metadata & {
+		date?: string | Date
+		tags?: unknown
+	}
+	if (!date) return undefined
+	return {
+		route: localize(lang, `/posts/${slug}`),
+		title: String(title),
+		date: new Date(date).toISOString(),
+		description: description ?? undefined,
+		tags: toTags(tags)
+	}
 }
 
-/** Published posts whose front matter `tags` include `tag` (case-insensitive), newest first. */
-export const getPostsByTag = async (tag: string): Promise<Post[]> =>
-	(await getPosts()).filter(post => post.tags.includes(tag.toLowerCase()))
+/**
+ * All published posts in `lang`, newest first. Posts without a `lang` translation
+ * are left out, as are drafts outside development (see `lib/content.ts`).
+ */
+export const getPosts = cache(async (lang: Locale): Promise<Post[]> => {
+	const entries = (await getEntries('posts')).filter(({ locales }) => locales.includes(lang))
+	const posts = await Promise.all(entries.map(({ slug }) => toPost(slug, lang)))
+	return posts
+		.filter(post => post !== undefined)
+		.toSorted((a, b) => +new Date(b.date) - +new Date(a.date))
+})
+
+/** Published posts in `lang` whose front matter `tags` include `tag` (case-insensitive). */
+export const getPostsByTag = async (lang: Locale, tag: string): Promise<Post[]> =>
+	(await getPosts(lang)).filter(post => post.tags.includes(tag.toLowerCase()))

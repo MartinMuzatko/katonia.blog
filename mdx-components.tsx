@@ -6,16 +6,28 @@ import { Anchor } from './components/Anchor'
 import { Divider } from './components/Divider'
 import { Figure } from './components/Figure'
 import { MorePosts } from './components/MorePosts'
+import { getDictionary, localize, toLocale } from './lib/i18n'
 import { formatDate } from './lib/site'
 
 const blogComponents = getBlogMDXComponents({ Divider, Figure })
 
+/** `content/posts/foo/de.mdx` → `{ lang: 'de', postRoute: '/de/posts/foo' }` (postRoute only for posts). */
+const parseFilePath = (filePath = '') => {
+	const [, section, slug, lang] =
+		filePath
+			.replaceAll('\\', '/')
+			.match(/(?:^|\/)content\/([^/]+)\/([^/]+)\/([^/.]+)\.mdx?$/) ?? []
+	const locale = toLocale(lang)
+	return {
+		lang: locale,
+		postRoute: section === 'posts' ? localize(locale, `/posts/${slug}`) : undefined
+	}
+}
+
 const Wrapper: MDXWrapper = ({ children, metadata }) => {
 	const { title, filePath } = metadata
-	// Only individual posts (app/posts/<slug>/page.mdx) get the "more writing" list.
-	const postRoute = filePath
-		?.replaceAll('\\', '/')
-		.match(/(?:^|\/)app(\/posts\/[^/]+)\/page\.mdx?$/)?.[1]
+	const { lang, postRoute } = parseFilePath(filePath)
+	const dict = getDictionary(lang)
 	const { date, readingTime } = metadata as typeof metadata & {
 		date?: string
 		readingTime?: { minutes: number }
@@ -26,27 +38,27 @@ const Wrapper: MDXWrapper = ({ children, metadata }) => {
 				<h1>{String(title ?? '')}</h1>
 				{date && (
 					<p className="post-meta">
-						<time dateTime={new Date(date).toISOString()}>{formatDate(date)}</time>
+						<time dateTime={new Date(date).toISOString()}>
+							{formatDate(date, lang)}
+						</time>
 						{readingTime && readingTime.minutes > 0 && (
 							<>
 								<span aria-hidden="true"> · </span>
-								{Math.max(1, Math.round(readingTime.minutes))} min read
+								{dict.minRead(Math.max(1, Math.round(readingTime.minutes)))}
 							</>
 						)}
 					</p>
 				)}
 			</header>
 			{children}
-			{postRoute && <MorePosts currentRoute={postRoute} />}
+			{postRoute && <MorePosts lang={lang} currentRoute={postRoute} />}
 		</>
 	)
 }
 
-export function useMDXComponents(components?: MDXComponents): MDXComponents {
-	return {
-		...blogComponents,
-		a: Anchor,
-		wrapper: Wrapper,
-		...components
-	}
-}
+export const useMDXComponents = (components?: MDXComponents): MDXComponents => ({
+	...blogComponents,
+	a: Anchor,
+	wrapper: Wrapper,
+	...components
+})

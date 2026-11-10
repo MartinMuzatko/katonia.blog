@@ -6,7 +6,7 @@ import { useTheme } from 'nextra-theme-blog'
  * Sun/moon toggle. Both icons are always rendered and CSS (`.dark`) picks one,
  * so the server HTML matches the client and there is no flash or hydration mismatch.
  */
-export function ThemeToggle() {
+export const ThemeToggle = ({ label }: { label: string }) => {
 	const { resolvedTheme, setTheme } = useTheme()
 	const next = resolvedTheme === 'dark' ? 'light' : 'dark'
 
@@ -15,8 +15,8 @@ export function ThemeToggle() {
 			type="button"
 			className="theme-toggle"
 			onClick={() => setTheme(next)}
-			aria-label="Toggle dark mode"
-			title="Toggle dark mode"
+			aria-label={label}
+			title={label}
 		>
 			{/* Moon: shown in light mode */}
 			<svg
