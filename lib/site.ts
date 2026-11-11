@@ -4,15 +4,14 @@ import { type Locale, LOCALES, localize } from './i18n'
 
 export const SITE = {
 	name: 'Katonia',
-	url: 'https://katonia.blog'
+	url: 'https://katonia.blog',
+	email: 'katoniablog@gmail.com'
 } as const
 
 export type NavKey = 'posts' | 'reading' | 'about' | 'now'
 
 /** Locale-less paths; labels come from the dictionary. */
-export const NAV: readonly { key: NavKey; path: string }[] = [
-	{ key: 'posts', path: '/posts' }
-]
+export const NAV: readonly { key: NavKey; path: string }[] = [{ key: 'posts', path: '/posts' }]
 
 const DATE_LOCALES: Record<Locale, string> = { en: 'en-GB', de: 'de-DE' }
 

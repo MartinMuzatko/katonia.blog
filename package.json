@@ -15,11 +15,14 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"@tailwindcss/postcss": "^4.3.5",
 		"next": "^16.4.6",
 		"nextra": "^4.6.1",
 		"nextra-theme-blog": "^4.6.1",
+		"postcss": "^8.5.32",
 		"react": "^19.3.1",
-		"react-dom": "^19.3.1"
+		"react-dom": "^19.3.1",
+		"tailwindcss": "^4.3.5"
 	},
 	"devDependencies": {
 		"@types/node": "^26.6.6",

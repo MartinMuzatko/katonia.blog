@@ -2,8 +2,10 @@
 
 import { useTheme } from 'nextra-theme-blog'
 
+const icon = 'fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]'
+
 /**
- * Sun/moon toggle. Both icons are always rendered and CSS (`.dark`) picks one,
+ * Sun/moon toggle. Both icons are always rendered and Tailwind's `dark:` variant picks one,
  * so the server HTML matches the client and there is no flash or hydration mismatch.
  */
 export const ThemeToggle = ({ label }: { label: string }) => {
@@ -13,14 +15,14 @@ export const ThemeToggle = ({ label }: { label: string }) => {
 	return (
 		<button
 			type="button"
-			className="theme-toggle"
+			className="inline-grid size-8 -mr-[7px] cursor-pointer place-items-center border-0 bg-transparent p-0 text-muted transition-colors duration-150 hover:text-accent"
 			onClick={() => setTheme(next)}
 			aria-label={label}
 			title={label}
 		>
 			{/* Moon: shown in light mode */}
 			<svg
-				className="only-light"
+				className={`${icon} dark:hidden`}
 				viewBox="0 0 24 24"
 				width="18"
 				height="18"
@@ -30,7 +32,7 @@ export const ThemeToggle = ({ label }: { label: string }) => {
 			</svg>
 			{/* Sun: shown in dark mode */}
 			<svg
-				className="only-dark"
+				className={`${icon} hidden dark:block`}
 				viewBox="0 0 24 24"
 				width="18"
 				height="18"

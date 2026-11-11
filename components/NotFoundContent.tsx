@@ -33,9 +33,9 @@ export const NotFoundContent = ({ locales }: NotFoundContentProps) => {
 	return (
 		<>
 			<title>{`${text.title} · ${SITE.name}`}</title>
-			<div className="not-found">
+			<div className="mt-16 mb-12 text-center">
 				<h1>{text.heading}</h1>
-				<p>{text.body}</p>
+				<p className="text-muted">{text.body}</p>
 			</div>
 			{picks.length > 0 && <PostList lang={lang} posts={picks} />}
 		</>

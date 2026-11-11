@@ -9,8 +9,13 @@ export const MorePosts = async ({ lang, currentRoute, limit = 4 }: MorePostsProp
 	const posts = (await getPosts(lang)).filter(post => post.route !== currentRoute).slice(0, limit)
 	if (posts.length === 0) return null
 	return (
-		<aside className="more-posts" aria-labelledby="more-posts-heading">
-			<h2 id="more-posts-heading">{getDictionary(lang).moreWriting}</h2>
+		<aside className="mt-16 border-t border-hairline pt-6" aria-labelledby="more-posts-heading">
+			<h2
+				id="more-posts-heading"
+				className="m-0! mb-5! font-ui text-[0.875rem]! font-medium! tracking-normal! text-muted!"
+			>
+				{getDictionary(lang).moreWriting}
+			</h2>
 			<PostList lang={lang} posts={posts} />
 		</aside>
 	)

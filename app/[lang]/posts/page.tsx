@@ -21,7 +21,10 @@ const WritingPage = async ({ params }: PageProps<'/[lang]/posts'>) => {
 			<h1>{getDictionary(lang).nav.posts}</h1>
 			{[...byYear].map(([year, yearPosts]) => (
 				<section key={year} aria-labelledby={`y${year}`}>
-					<h2 id={`y${year}`} className="year">
+					<h2
+						id={`y${year}`}
+						className="mt-10! mb-5! border-b border-hairline pb-2 text-[0.875rem]! font-medium! tracking-normal! text-muted!"
+					>
 						{year}
 					</h2>
 					<PostList lang={lang} posts={yearPosts} />

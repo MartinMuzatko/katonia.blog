@@ -60,7 +60,10 @@ const RootLayout = async ({ children, params }: LayoutProps<'/[lang]'>) => {
 				color={{ hue: 287, saturation: 52, lightness: { light: 37, dark: 70 } }}
 			/>
 			<body>
-				<a href="#content" className="skip-link">
+				<a
+					href="#content"
+					className="absolute -top-[100px] left-(--gutter) bg-bg px-3 py-2 font-ui text-[0.875rem] focus:top-(--gutter)"
+				>
 					{dict.skipToContent}
 				</a>
 				{/* The header goes in `banner` so it sits inside the theme provider but outside the article */}

@@ -35,6 +35,12 @@ const DICTIONARIES = {
 		allWriting: 'All writing →',
 		moreWriting: 'More writing',
 		noReadingNotes: 'No reading notes yet.',
+		cta: {
+			heading: "I'd love to hear your thoughts.",
+			intro: 'Maybe something resonated with you. Maybe you disagree. Maybe this sparked an entirely different thought.',
+			body: "Whatever it is, I'd genuinely enjoy hearing from you.",
+			action: 'Share your thoughts with me:'
+		},
 		minRead: (minutes: number) => `${minutes} min read`,
 		notFound: {
 			title: 'Not found',
@@ -54,6 +60,12 @@ const DICTIONARIES = {
 		allWriting: 'Alle Texte →',
 		moreWriting: 'Weitere Texte',
 		noReadingNotes: 'Noch keine Lektürenotizen.',
+		cta: {
+			heading: 'Ich würde gern deine Gedanken hören.',
+			intro: 'Vielleicht hat dich etwas berührt. Vielleicht bist du anderer Meinung. Vielleicht hat dieser Text aber auch einen ganz anderen Gedanken in dir ausgelöst.',
+			body: 'Was auch immer es ist, ich freue mich, von dir zu hören.',
+			action: 'Teile deine Gedanken mit mir:'
+		},
 		minRead: (minutes: number) => `${minutes} Min. Lesezeit`,
 		notFound: {
 			title: 'Nicht gefunden',
