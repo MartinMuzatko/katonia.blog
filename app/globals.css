@@ -446,6 +446,12 @@ article.x\:prose :where(th, td) {
 	margin: 0 0 3.5rem !important;
 }
 
+article.x\:prose h2.section-heading {
+	font-size: 1.375rem;
+	font-weight: 600;
+	margin: 0 0 1.5rem;
+}
+
 .post-list {
 	list-style: none;
 	padding: 0 !important;

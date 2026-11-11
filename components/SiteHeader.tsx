@@ -39,7 +39,7 @@ export const SiteHeader = ({ lang, nav, labels }: SiteHeaderProps) => {
 			<nav aria-label={labels.mainNav} className="site-nav">
 				<ul>
 					{nav.map(({ href, label }) => {
-						const active = pathname === href || pathname.startsWith(href + '/')
+						const active = pathname === href
 						return (
 							<li key={href}>
 								<Link href={href} aria-current={active ? 'page' : undefined}>

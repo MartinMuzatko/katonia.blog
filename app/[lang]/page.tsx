@@ -20,6 +20,7 @@ const HomePage = async ({ params }: PageProps<'/[lang]'>) => {
 		<>
 			<h1 className="sr-only">{SITE.name}</h1>
 			<p className="intro">{dict.intro}</p>
+			<h2 className="section-heading">{dict.latestHeading}</h2>
 			<PostList lang={lang} posts={posts.slice(0, LATEST)} />
 			{posts.length > LATEST && (
 				<p className="more">
