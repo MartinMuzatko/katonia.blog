@@ -11,7 +11,10 @@ export const SITE = {
 export type NavKey = 'posts' | 'reading' | 'about' | 'now'
 
 /** Locale-less paths; labels come from the dictionary. */
-export const NAV: readonly { key: NavKey; path: string }[] = [{ key: 'posts', path: '/posts' }]
+export const NAV: readonly { key: NavKey; path: string }[] = [
+	{ key: 'posts', path: '/posts' },
+	{ key: 'about', path: '/about' }
+]
 
 const DATE_LOCALES: Record<Locale, string> = { en: 'en-GB', de: 'de-DE' }
 

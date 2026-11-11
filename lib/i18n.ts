@@ -51,7 +51,7 @@ const DICTIONARIES = {
 	de: {
 		description: 'Notizen übers Wachsen an Widerständen.',
 		intro: 'Ein Notizbuch über Philosophie, Freiheit und den eigenen Weg.',
-		nav: { posts: 'Texte', reading: 'Lektüre', about: 'Über', now: 'Jetzt' },
+		nav: { posts: 'Texte', reading: 'Lektüre', about: 'Über Mich', now: 'Jetzt' },
 		latestHeading: 'Notizen & Gedanken',
 		mainNav: 'Hauptnavigation',
 		languageNav: 'Sprache',

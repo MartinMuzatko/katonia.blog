@@ -249,7 +249,7 @@ article.x\:prose hr {
 }
 
 article.x\:prose :where(img, video) {
-	width: 100%;
+	max-width: 100%;
 	height: auto;
 	display: block;
 	margin: 0;
@@ -258,6 +258,10 @@ article.x\:prose :where(img, video) {
 
 article.x\:prose figure {
 	margin: 2em 0;
+}
+
+article.x\:prose figure :where(img, video) {
+	width: 100%;
 }
 
 article.x\:prose figcaption {

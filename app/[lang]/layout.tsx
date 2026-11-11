@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter, Newsreader } from 'next/font/google'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Footer, Layout } from 'nextra-theme-blog'
+import { Layout } from 'nextra-theme-blog'
 import { Head } from 'nextra/components'
 
+import { SiteFooter } from '../../components/SiteFooter'
 import { SiteHeader } from '../../components/SiteHeader'
 import { getDictionary, isLocale, LOCALES, localize, toLocale } from '../../lib/i18n'
 import { alternatesFor, NAV, SITE } from '../../lib/site'
@@ -83,17 +83,7 @@ const RootLayout = async ({ children, params }: LayoutProps<'/[lang]'>) => {
 				>
 					<div id="content" />
 					{children}
-					<Footer>
-						<span>
-							© {YEAR} {SITE.name}
-						</span>
-						<span aria-hidden="true"> · </span>
-						{/* A route handler, not a page, so a plain <a> is right */}
-						{/* oxlint-disable-next-line nextjs/no-html-link-for-pages */}
-						<a href={localize(lang, '/feed.xml')}>RSS</a>
-						<span aria-hidden="true"> · </span>
-						<Link href={localize(lang, '/about')}>{dict.nav.about}</Link>
-					</Footer>
+					<SiteFooter lang={lang} year={YEAR} aboutLabel={dict.nav.about} />
 				</Layout>
 			</body>
 		</html>
