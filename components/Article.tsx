@@ -4,6 +4,7 @@ import { getDictionary, localize, toLocale } from '../lib/i18n'
 import { formatDate } from '../lib/site'
 import { ArticleCTA } from './ArticleCta'
 import { MorePosts } from './MorePosts'
+import { TranslationNotice } from './TranslationNotice'
 
 /** `content/posts/foo/de.mdx` → `{ lang: 'de', postRoute: '/de/posts/foo' }` (postRoute only for posts). */
 const parseFilePath = (filePath = '') => {
@@ -14,13 +15,14 @@ const parseFilePath = (filePath = '') => {
 	const locale = toLocale(lang)
 	return {
 		lang: locale,
+		slug: section === 'posts' ? slug : undefined,
 		postRoute: section === 'posts' ? localize(locale, `/posts/${slug}`) : undefined
 	}
 }
 
 export const Article: MDXWrapper = ({ children, metadata }) => {
 	const { title, filePath } = metadata
-	const { lang, postRoute } = parseFilePath(filePath)
+	const { lang, postRoute, slug } = parseFilePath(filePath)
 	const dict = getDictionary(lang)
 	const { date, readingTime, description } = metadata as typeof metadata & {
 		date?: string
@@ -44,6 +46,7 @@ export const Article: MDXWrapper = ({ children, metadata }) => {
 						)}
 					</p>
 				)}
+				{slug && <TranslationNotice slug={slug} lang={lang} />}
 				{description && <p className="mt-4! mb-0! text-muted">{description}</p>}
 			</header>
 			{children}

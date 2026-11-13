@@ -6,6 +6,7 @@
 		"dev": "next --turbopack",
 		"build": "next build",
 		"start": "next start",
+		"newpost": "node scripts/newpost.mjs",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",

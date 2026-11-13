@@ -35,6 +35,9 @@ export const toTags = (value: unknown): string[] =>
 		.map(tag => String(tag).trim().toLowerCase())
 		.filter(Boolean)
 
+/** Marks the language a post was originally written in; translations don't carry it. */
+export const ORIGINAL_TAG = 'original'
+
 const isDraft = (metadata: Record<string, unknown>): boolean =>
 	metadata.draft === true || toTags(metadata.tags).includes('draft')
 
@@ -93,4 +96,27 @@ export const contentEntryMetadata = async ({
 		...metadata,
 		alternates: alternatesFor(lang, route, await getEntryLocales(section, slug))
 	}
+}
+
+/**
+ * The locale `slug` was originally written in, if `lang` is a translation of it:
+ * i.e. `lang` isn't tagged `original` but another locale is.
+ */
+export const getOriginalLocale = async (
+	section: Section,
+	slug: string,
+	lang: Locale
+): Promise<Locale | undefined> => {
+	const locales = await getEntryLocales(section, slug)
+	const tagged = await Promise.all(
+		locales.map(async locale => ({
+			locale,
+			original: toTags(
+				((await importEntry(section, slug, locale)).metadata as { tags?: unknown }).tags
+			).includes(ORIGINAL_TAG)
+		}))
+	)
+	return tagged.some(entry => entry.locale === lang && entry.original)
+		? undefined
+		: tagged.find(entry => entry.original)?.locale
 }

@@ -42,6 +42,8 @@ const DICTIONARIES = {
 			action: 'Share your thoughts with me:'
 		},
 		minRead: (minutes: number) => `${minutes} min read`,
+		languageNames: { en: 'English', de: 'German' },
+		translatedFrom: { before: '(Automatically translated from ', after: ')' },
 		notFound: {
 			title: 'Not found',
 			heading: 'We all get lost sometimes',
@@ -67,6 +69,8 @@ const DICTIONARIES = {
 			action: 'Teile deine Gedanken mit mir:'
 		},
 		minRead: (minutes: number) => `${minutes} Min. Lesezeit`,
+		languageNames: { en: 'Englischen', de: 'Deutschen' },
+		translatedFrom: { before: '(Automatisch aus dem ', after: ' übersetzt)' },
 		notFound: {
 			title: 'Nicht gefunden',
 			heading: 'Jeder verirrt sich mal',
